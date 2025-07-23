@@ -6,9 +6,10 @@ I will grab the data from csv files, or what ever I can download from my banks g
 ---
 
 ## TODO
-- [ ] Figure out the format of files that my bank will give me
+- [x] Figure out the format of files that my bank will give me
     - [ ] See if I can automate their download
 - [ ] Figure out how to parse data
+    - [ ] maybe use pandas
 - [ ] After parsing data sort into categories
 - [ ] Break down expenses v income
 - [ ] Compare monthly spending
