@@ -7,6 +7,7 @@ pkgs.mkShell {
             numpy
             requests
             pandas
+            python-dotenv
         ]))
     ];
 }
