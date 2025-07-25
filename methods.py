@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import os
 from dotenv import load_dotenv
 
@@ -13,7 +14,7 @@ BANK_TWO = os.getenv('BANK_TWO')
 def get_bank_one_month(month):
     savings = get_bank_one_month_savings(month)
     credit = get_bank_one_month_credit(month)
-    chekcing = get_bank_one_month_checking(month)
+    checking = get_bank_one_month_checking(month)
     file = pd.concat([savings, credit, checking])
     return file
 
@@ -55,6 +56,15 @@ def get_bank_one_spending(month):
     credit_total = get_spent_positive_total(credit)
 
     return savings_total + checking_total + credit_total
+
+
+# Get spending data per category
+def get_bank_one_category_spending(month):
+    statement = get_bank_one_month(month)
+
+    categories_amount_dict = get_categories_amount(statement)
+
+    return categories_amount_dict
 
 
 ## Bank Two
@@ -104,3 +114,28 @@ def get_spent_negative_total(file):
         if transaction < 0:
             total -= transaction
     return total
+
+
+def get_categories_amount(month):
+    file = get_bank_two_month(month)
+    categories_amount_dict = dict()
+    for x in range(len(file)):
+        category = file["Category"][x]
+        amount = float(file["Amount"][x])
+        print(category)
+        print(amount)
+        if category not in categories_amount_dict.keys():
+            categories_amount_dict.update({category:amount})
+        else:
+            categories_amount_dict[category] += amount
+    return categories_amount_dict
+
+
+def test(month):
+    statement = get_bank_two_month(month)
+    # for transaction in statement["Date"]:
+    #     print()
+    len_statement = len(statement)
+    print(len_statement)
+    for x in range(len_statement):
+        print(statement["Amount"][x])
