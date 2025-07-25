@@ -10,4 +10,8 @@ pkgs.mkShell {
             python-dotenv
         ]))
     ];
+
+    shellHook = ''
+        echo Entered Python dev environment
+    '';
 }
