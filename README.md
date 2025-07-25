@@ -8,6 +8,7 @@ I will grab the data from csv files, or what ever I can download from my banks g
 ## TODO
 - [x] Figure out the format of files that my bank will give me
     - [ ] See if I can automate their download
+    - [ ] Possibly see if I can use APIs to get data
 - [x] Figure out how to parse data
     - [x] maybe use pandas
 - [ ] After parsing data sort into categories
