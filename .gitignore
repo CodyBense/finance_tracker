@@ -2,3 +2,4 @@ dev.sh
 statements/*
 __pycache__
 .env
+test.py
