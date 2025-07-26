@@ -21,7 +21,10 @@ def get_bank_one_month(month):
 
 # Get the relavent data from savings account
 def get_bank_one_month_savings(month):
-    savings = pd.read_csv(f"statements/{BANK_ONE}/savings/{BANK_ONE}_savings_{month}.csv", usecols=["Date", "Description", "Category", "Amount"])
+    savings = pd.read_csv(
+        f"statements/{BANK_ONE}/savings/{BANK_ONE}_savings_{month}.csv",
+        usecols=["Date", "Description", "Category", "Amount"]
+    )
     return savings
 
 
@@ -126,6 +129,21 @@ def get_categories_amount(file):
     for x in range(len(file)):
         category = file["Category"][x]
         amount = float(file["Amount"][x])
+        if amount < 0:
+            amount = -(amount)
+        if category not in categories_amount_dict.keys():
+            categories_amount_dict.update({category:amount})
+        else:
+            categories_amount_dict[category] += amount
+    return categories_amount_dict
+
+
+def get_categories_amount_two(file):
+    file["Category"] = file["Category"].fillna("Payment")
+    categories_amount_dict = dict()
+    for x in range(len(file)):
+        category = file["Category"][x]
+        amount = file["Amount"][x]
         if amount < 0:
             amount = -(amount)
         if category not in categories_amount_dict.keys():
