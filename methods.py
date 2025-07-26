@@ -71,7 +71,10 @@ def get_bank_one_category_spending(month):
 
 # Get that relavent data from the statement from bank two
 def get_bank_two_month(month):
-    file = pd.read_csv(f"statements/{BANK_TWO}/{BANK_TWO}_{month}.CSV", usecols=["Transaction Date", "Description", "Category", "Amount"])
+    file = pd.read_csv(
+        f"statements/{BANK_TWO}/{BANK_TWO}_{month}.CSV",
+        usecols=["Transaction Date", "Description", "Category", "Amount"]
+    )
     file.rename(columns={'Transaction Date': 'Date'}, inplace=True)
     return file
 
@@ -116,14 +119,15 @@ def get_spent_negative_total(file):
     return total
 
 
-def get_categories_amount(month):
-    file = get_bank_two_month(month)
+# Gets the amount spent per category
+def get_categories_amount(file):
+    file["Category"] = file["Category"].fillna("Payment")
     categories_amount_dict = dict()
     for x in range(len(file)):
         category = file["Category"][x]
         amount = float(file["Amount"][x])
-        print(category)
-        print(amount)
+        if amount < 0:
+            amount = -(amount)
         if category not in categories_amount_dict.keys():
             categories_amount_dict.update({category:amount})
         else:
