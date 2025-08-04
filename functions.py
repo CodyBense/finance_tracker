@@ -1,4 +1,3 @@
-from unicodedata import category
 import pandas as pd
 import numpy as np
 import os
@@ -21,33 +20,46 @@ def get_bank_one_month(month: str):
 
 
 def get_bank_one_saving(month: str) -> pd.DataFrame:
-    savings:pd.DataFrame = pd.read_csv(
-        f"statements/{BANK_ONE}/savings/{BANK_ONE}_savings_{month}.csv",
-        usecols=["Date", "Description", "Category", "Amount"],
-        dtype={"Date":str, "Description": str, "Category":str, "Amount": float}
-    )
-    savings["Category"] = savings["Category"].fillna("Payment")
-    return savings
+    try:
+        savings:pd.DataFrame = pd.read_csv(
+            f"statements/{BANK_ONE}/savings/{BANK_ONE}_savings_{month}.csv",
+            usecols=["Date", "Description", "Category", "Amount"],
+            dtype={"Date":str, "Description": str, "Category":str, "Amount": float}
+        )
+        savings["Category"] = savings["Category"].fillna("Payment")
+        return savings
+    except:
+        print(f"Bank one savings file for {month} doesn't exist")
+    return None
 
 
 def get_bank_one_credit(month: str) -> pd.DataFrame:
-    credit:pd.DataFrame = pd.read_csv(
-        f"statements/{BANK_ONE}/credit/{BANK_ONE}_credit_{month}.csv",
-        usecols=["Date", "Description", "Category", "Amount"],
-        dtype={"Date":str, "Description": str, "Category":str, "Amount": float}
-    )
-    credit["Category"] = credit["Category"].fillna("Payment")
-    return credit
+    try:
+        credit:pd.DataFrame = pd.read_csv(
+            f"statements/{BANK_ONE}/credit/{BANK_ONE}_credit_{month}.csv",
+            usecols=["Date", "Description", "Category", "Amount"],
+            dtype={"Date":str, "Description": str, "Category":str, "Amount": float}
+        )
+        credit["Category"] = credit["Category"].fillna("Payment")
+        return credit
+    except:
+        print(f"Bank one credit file for {month} doesn't exist")
+    return None
+
 
 
 def get_bank_one_checking(month: str) -> pd.DataFrame:
-    checking:pd.DataFrame = pd.read_csv(
-        f"statements/{BANK_ONE}/checking/{BANK_ONE}_checking_{month}.csv",
-        usecols=["Date", "Description", "Category", "Amount"],
-        dtype={"Date":str, "Description": str, "Category":str, "Amount": float}
-    )
-    checking["Category"] = checking["Category"].fillna("Payment")
-    return checking
+    try:
+        checking:pd.DataFrame = pd.read_csv(
+            f"statements/{BANK_ONE}/checking/{BANK_ONE}_checking_{month}.csv",
+            usecols=["Date", "Description", "Category", "Amount"],
+            dtype={"Date":str, "Description": str, "Category":str, "Amount": float}
+        )
+        checking["Category"] = checking["Category"].fillna("Payment")
+        return checking
+    except:
+        print(f"Bank one checking file for {month} doesn't exist")
+    return None
 
 
 def get_bank_one_spending(month: str) -> float:
@@ -77,13 +89,17 @@ def get_bank_two_month(month: str) -> pd.DataFrame:
 
 
 def get_bank_two_credit(month: str) -> pd.DataFrame:
-    statement = pd.read_csv(
-        f"statements/{BANK_TWO}/{BANK_TWO}_{month}.CSV",
-        usecols=["Transaction Date", "Description", "Category", "Amount"],
-        dtype={"Transaction Date":str, "Description": str, "Category":str, "Amount": float}
-    )
+    try:
+        statement = pd.read_csv(
+            f"statements/{BANK_TWO}/{BANK_TWO}_{month}.CSV",
+            usecols=["Transaction Date", "Description", "Category", "Amount"],
+            dtype={"Transaction Date":str, "Description": str, "Category":str, "Amount": float}
+        )
+        return statement
+    except:
+        print(f"Bank two credit file for {month} doesn't exist")
+    return None
 
-    return statement
 
 
 def get_bank_two_spending(month: str) -> float:
